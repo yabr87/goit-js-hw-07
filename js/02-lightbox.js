@@ -17,13 +17,9 @@ const createGalleryListItem = galleryItems
 
 galleryListItem.insertAdjacentHTML('afterbegin', `${createGalleryListItem}`);
 
-// open modal simpleLightbox
+// open simpleLightbox
 
-galleryListItem.addEventListener('click', onImageClick);
-
-function onImageClick(image) {
-  image.preventDefault();
-  if (image.target === image.currentTarget) return;
-
-  let gallery = new SimpleLightbox('.gallery a');
-}
+const gallerySimpleLightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
