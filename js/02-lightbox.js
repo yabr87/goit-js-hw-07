@@ -1,4 +1,29 @@
 import { galleryItems } from './gallery-items.js';
-// Change code below this line
 
-console.log(galleryItems);
+const galleryListItem = document.querySelector('.gallery');
+
+//add markup________________________________________
+const createGalleryListItem = galleryItems
+  .map(
+    ({
+      preview,
+      original,
+      description,
+    }) => `<a class="gallery__item" href="${original}">
+  <img class="gallery__image" src="${preview}" alt="${description}" />
+</a>`
+  )
+  .join('');
+
+galleryListItem.insertAdjacentHTML('afterbegin', `${createGalleryListItem}`);
+
+// open modal simpleLightbox
+
+galleryListItem.addEventListener('click', onImageClick);
+
+function onImageClick(image) {
+  image.preventDefault();
+  if (image.target === image.currentTarget) return;
+
+  let gallery = new SimpleLightbox('.gallery a');
+}
