@@ -19,7 +19,6 @@ const createGalleryListItem = galleryItems
   .join('');
 
 galleryListItem.insertAdjacentHTML('afterbegin', `${createGalleryListItem}`);
-//___________________________________________________
 
 // open modal Lightbox
 
@@ -29,16 +28,37 @@ function onImageClick(image) {
   image.preventDefault();
   if (image.target === image.currentTarget) return;
 
-  const modalLightbox = basicLightbox.create(
-    `<img src="${image.target.dataset.source}">`
-  );
+  const html = `<img src="${image.target.dataset.source}">`;
+
+  const modalLightbox = basicLightbox.create(html, {
+    onShow: () => {
+      document.addEventListener('keydown', onModalLightboxClose);
+      console.log(`addEventListener`);
+    },
+    onClose: () => {
+      document.removeEventListener('keydown', onModalLightboxClose);
+      console.log(`removeEventListener`);
+    },
+  });
 
   modalLightbox.show();
 
-  document.addEventListener('keydown', (event) => {
+  function onModalLightboxClose(event) {
     if (event.code === 'Escape') {
       modalLightbox.close();
+      console.log(`testing a function`);
     }
-  });
+  }
+
+  // const modalLightbox = basicLightbox.create(
+  //   `<img src="${image.target.dataset.source}">`
+  // );
+
+  // modalLightbox.show();
+
+  // document.addEventListener('keydown', (event) => {
+  //   if (event.code === 'Escape') {
+  //     modalLightbox.close();
+  //   }
+  // });
 }
-//____________________________________________________
